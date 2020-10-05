@@ -5,7 +5,7 @@ import { isNilOrEmpty } from "ramdasauce"
 import Keystroke from "../Lib/Keystroke"
 import Mousetrap from "mousetrap"
 import fs from "fs"
-
+import { apiRequestToCurl } from '../Lib/api-to-curl'
 /**
  * Handles UI state.
  */
@@ -545,7 +545,13 @@ class UI {
       type: command.type,
     })
 
-    const commands = JSON.stringify(this.session.commands.map(formatCommand))
+    let commands = ""
+    this.session.commands.forEach((command)=>{
+      commands+=apiRequestToCurl(command.payload)+'\n'
+    }) 
+
+    
+    
     fs.writeFile(this.exportFilePath + "/reactotron_timeline.txt", commands, err => {
       if (err) {
         console.log(err)
