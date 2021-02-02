@@ -547,7 +547,7 @@ class UI {
 
     let commands = ""
     this.session.commands.forEach((command)=>{
-      commands+=apiRequestToCurl(command.payload)+'\n'
+      commands+="#"+String(command.date.getTime())+' - '+String(command.date)+"\n" + apiRequestToCurl(command.payload)+'\n'
     }) 
 
     
